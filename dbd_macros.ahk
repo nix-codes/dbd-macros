@@ -8,14 +8,14 @@
 
 ; ------------------------------------------------------------------------------------
 ; Macros summary
-; ------------------------------------------------------------------------------------
+; ----------------------------------------------------------------------------------------------
 ; Action                        | Hotkey for enabling          | Hotkey for disabling
-; ------------------------------+------------------------------+----------------------
+; ------------------------------+------------------------------+--------------------------------
 ; Hold M1                       | <Left Mouse Button> + <Tab>  | <Left Mouse Click>
 ; Hold M2                       | <Right Mouse Button> + <Tab> | <Right Mouse Click>
 ; Wiggle on killer's shoulders  | Hold <~>                     | Release <~>
 ; Struggle on hook              | <Tab>                        | <Tab>
-; Flashlight spam               | <Middle Mouse Button>        |
+; Flashlight spam               | Hold <Middle Mouse Button>   | Release <Middle Mouse Button>
 
 
 
@@ -23,7 +23,6 @@
 ; ------------------------------------------------------------------------------------
 ; Constants
 ; ------------------------------------------------------------------------------------
-; Game window title (check it using the game in windowed mode)
 GAME_WINDOW_TITLE := "DeadByDaylight"
 
 
@@ -48,9 +47,7 @@ tooltipMessages := {}
 ; =============================================================================
 ; Hold M1 or M2
 ; -------------
-; Toggle: <Left Mouse Button> + <Tab>
-;
-; Description:
+; Trigger: <Left/Right Mouse Button> + <Tab>
 ; =============================================================================
 Tab::
 	lButtonDown := GetKeyState("LButton", "P")
@@ -119,7 +116,7 @@ RButton Up::
 ;   When placed on the hook, press the toggle hotkey to enable automatic
 ;   struggling.  When you are done, press the key combination again to disable.
 ;
-;   Once the struggling is enabled, you can <Alt> + <Tab> to other windows, but
+;   Once struggling is enabled, you can <Alt> + <Tab> to other windows, but
 ;   you shouldn't use Steam's overlay (<Shift> + <Tab>). The overlay overrides
 ;   the game control, so that means that you will be sending "space" key to the
 ;   Steam app instead of the game, and you will die.
