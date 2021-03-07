@@ -3,7 +3,7 @@
 ;
 ; Author     : Nicky Ramone
 ; Created    : Jan, 2019
-; Last update: Feb, 2021
+; Last update: Mar, 2021
 ; =============================================================================
 
 ; ------------------------------------------------------------------------------------
@@ -11,8 +11,8 @@
 ; ----------------------------------------------------------------------------------------------
 ; Action                        | Hotkey for enabling          | Hotkey for disabling
 ; ------------------------------+------------------------------+--------------------------------
-; Hold M1                       | <Left Mouse Button> + <Tab>  | <Left Mouse Click>
-; Hold M2                       | <Right Mouse Button> + <Tab> | <Right Mouse Click>
+; Hold M1                       | <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
+; Hold M2                       | <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
 ; Wiggle on killer's shoulders  | Hold <~>                     | Release <~>
 ; Struggle on hook              | <Tab>                        | <Tab>
 ; Flashlight spam               | Hold <Middle Mouse Button>   | Release <Middle Mouse Button>
@@ -235,5 +235,13 @@ DisplayAllTooltips() {
 		tooltip := tooltip msg "`n"
 	}
 
-	Tooltip, %tooltip%, 900, 10
+	coords := GetScreenCoords(0.45, 0.01)
+	Tooltip, %tooltip%, coords[1], coords[2]
+}
+
+GetScreenCoords(xPercent, yPercent) {
+	windowWidth := 0
+	windowHeight := 0
+	WinGetPos,,, windowWidth, windowHeight, % GAME_WINDOW_TITLE
+	return [windowWidth * xPercent, windowHeight * yPercent]
 }
