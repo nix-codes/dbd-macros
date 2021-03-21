@@ -5,7 +5,7 @@ This project consists of a series of very simple macros for "Dead By Daylight" g
 # What can it do?
 Action                                     | Hotkey for enabling               | Hotkey for disabling
 -------------------------------------------|:----------------------------------|:-------------------------------
-_Hold M1_ (repairing gens; healing; etc.)    | Hold \<Left Mouse Button\> + \<Tab\>  | \<Left/Right Mouse Click\>
+*Hold M1* (repairing gens; healing; etc.)    | _Hold \<Left Mouse Button\> + \<Tab\>_  | \<Left/Right Mouse Click\>
 _Hold M2_ (healing; using toolbox; etc.)     | Hold \<Right Mouse Button\> + <Tab\> | \<Right/Right Mouse Click\>
 _Wiggle on killer's shoulders_               | Hold \<~\>                          |
 _Struggle on hook_                           | \<Tab\>                             | \<Tab\>
@@ -31,3 +31,5 @@ No. This macro provides no competitive advantage for playing the game. It just o
 It's very simple and you have 2 choices:
 1. Simplest way (using .exe file): Just download the exe file from the [releases page](https://github.com/nickyramone/dbd-macros/releases) and run it.
 2. Using source script: Install [AutoHotkey](https://www.autohotkey.com); download [dbd_macros.ahk](https://github.com/nickyramone/dbd-macros/blob/master/dbd_macros.ahk) from this site (or just copy/paste the script to a file of your own) and double click on it.
+
+After the macro is actively running, you will find an icon in the tray bar. You can also context menu on this icon to stop running the macro.
