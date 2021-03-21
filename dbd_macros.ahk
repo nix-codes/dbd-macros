@@ -1,21 +1,23 @@
 ; =============================================================================
-; AutoHotkey Macros for "Dead By Daylight" game
+; AutoHotkey macros for "Dead By Daylight" game
 ;
 ; Author     : Nicky Ramone
 ; Created    : Jan, 2019
 ; Last update: Mar, 2021
+; Revision   : 2
 ; =============================================================================
 
-; ------------------------------------------------------------------------------------
+; --------------------------------------------------------------------------------------------------
 ; Macros summary
-; ----------------------------------------------------------------------------------------------
-; Action                        | Hotkey for enabling          | Hotkey for disabling
-; ------------------------------+------------------------------+--------------------------------
-; Hold M1                       | <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
-; Hold M2                       | <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
-; Wiggle on killer's shoulders  | Hold <~>                     | Release <~>
-; Struggle on hook              | <Tab>                        | <Tab>
-; Flashlight spam               | Hold <Middle Mouse Button>   | Release <Middle Mouse Button>
+; --------------------------------------------------------------------------------------------------
+; Action                        | Hotkey for enabling               | Hotkey for disabling
+; ------------------------------+-----------------------------------+-------------------------------
+; Hold M1                       | Hold <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
+; Hold M2                       | Hola <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
+; Wiggle on killer's shoulders  | Hold <~>                          |
+; Struggle on hook              | <Tab>                             | <Tab>
+; Flashlight spam               | Hold <Middle Mouse Button>        |
+; --------------------------------------------------------------------------------------------------
 
 
 
@@ -31,10 +33,10 @@ GAME_WINDOW_TITLE := "DeadByDaylight"
 ; Init
 ; ------------------------------------------------------------------------------------
 toggle := False
-holdingM1 := False
-holdingM2 := False
-tooltipMessages := {}
-
+struggling := False
+ttip := new MultiTooltip()
+mouse_button_lock_manager := new MouseButtonLockManager(ttip)
+return
 
 
 
@@ -42,116 +44,113 @@ tooltipMessages := {}
 ; Macros
 ; ------------------------------------------------------------------------------------
 
+
 #If WinActive(GAME_WINDOW_TITLE)
 
-; =============================================================================
-; Hold M1 or M2
-; -------------
-; Trigger: <Left/Right Mouse Button> + <Tab>
-; =============================================================================
-Tab::
-	lButtonDown := GetKeyState("LButton", "P")
-	rButtonDown := GetkeyState("RButton", "P")
 
-	if (lButtonDown) {
-		ShowToolTip("hold-m1", "Holding M1...")
-		holdingM1 := True
-	}
-	else if (rButtonDown) {
-		ShowToolTip("hold-m2", "Holding M2...")
-		holdingM2 := True
+
+SC029::
+	WiggleOnKillersShoulders()
+	return
+
+*MButton::
+	SpamFlashlight()
+	return
+
+Tab::
+	if (mouse_button_lock_manager.toggleLock()) {
+		if (struggling) {
+			ToggleStruggleOnHook()
+		}
 	}
 	else {
-		CheckStruggleOnHook()
+		ToggleStruggleOnHook()	
 	}
 	return
 
 *LButton::
-	if (holdingM2) {
-		Click,, Right,, Up
-		holdingM2 := False
-		ClearTooltip("hold-m2")
-	}
-	if (holdingM1) {
-		ClearTooltip("hold-m1")
-		holdingM1 := False
-	}
-	Click,, Left,, Down
+	mouse_button_lock_manager.notifyLeftButtonDown()
 	return
 
 LButton Up::
-	if (holdingM1) {
-		return
-	}
-	Send, {LButton Up}
+	mouse_button_lock_manager.notifyLeftButtonUp()
 	return
-	
+
 *RButton::
-	if (holdingM1) {
-		Click,, Left,, Up
-		holdingM1 := False
-		ClearTooltip("hold-m1")
-	}
-	if (holdingM2) {
-		ClearTooltip("hold-m2")
-		holdingM2 := False
-	}
-	Click,, Right,, Down
+	mouse_button_lock_manager.notifyRightButtonDown()
 	return
 
 RButton Up::
-	if (holdingM2) {
-		return
-	}
-	Send, {RButton Up}
+	mouse_button_lock_manager.notifyRightButtonUp()
 	return
+	
+$Escape::
+	CancelToggleableAction()
+	return
+
+
+; =============================================================================
+; Flashlight spam
+; =============================================================================
+; The default is 10 (ms) but for flashlight spamming we want clicks to be faster.
+SpamFlashlight() {
+	global ttip
+	ttip.add("flashlight-spam", "Spamming flashlight")
+	SetMouseDelay, 0
+	while GetKeyState("MButton", "P")
+	{
+		MouseClick, Right
+	}
+	SetMouseDelay, 10
+	ttip.remove("flashlight-spam")
+}
 
 
 ; =============================================================================
 ; Struggle on hook
 ; ----------------
-; Toggle: <Tab>
-;
 ; Description:
-;   When placed on the hook, press the toggle hotkey to enable automatic
-;   struggling.  When you are done, press the key combination again to disable.
+;   Automatically struggles while survivor is on hook.
 ;
-;   Once struggling is enabled, you can <Alt> + <Tab> to other windows, but
+;   Once the struggling is enabled, you can <Alt> + <Tab> to other windows but
 ;   you shouldn't use Steam's overlay (<Shift> + <Tab>). The overlay overrides
 ;   the game control, so that means that you will be sending "space" key to the
 ;   Steam app instead of the game, and you will die.
-;   If you need to use Steam chat, for example, be sure to switch to steam by
-;   using <Alt> + <Tab>. That will take you to the real Steam window and the
-;   DBD window will remain intact in the background.
+;   If -for example- you need to use Steam chat while struggling, be sure to 
+;   switch to Steam by using <Alt> + <Tab>. That will take you to the real Steam
+;   window and the DBD window will remain intact in the background.
 ; =============================================================================
-CheckStruggleOnHook() {
-	global toggle
+ToggleStruggleOnHook() {
+	global struggling, ttip
+	static timerFn := Func("PressSpaceOnWindow")
 
-	if (toggle) {
-		toggle := False
-		SetTimer, StruggleOnHook, off
-		ClearTooltip("struggle")
+	if (struggling) {
+		struggling := False
+		SetTimer, %timerFn%, off
+		ttip.remove("struggle")
 	}
 	else {
-		ShowToolTip("struggle", "Struggling...")
-		toggle := True
-		SetTimer, StruggleOnHook, 200
+		ttip.add("struggle", "Struggling...")
+		struggling := True
+		SetTimer, %timerFn%, 200
 	}
 }
 
-StruggleOnHook:
+
+PressSpaceOnWindow() {
+	global GAME_WINDOW_TITLE
 	ControlSend,, {space}, % GAME_WINDOW_TITLE
-	return
+}
+
 
 
 
 ; =============================================================================
 ; Wiggle on killer's shoulders
-; ----------------------------
-; Trigger: Hold <~>
 ; =============================================================================
-SC029::
-	ShowToolTip("wiggle", "Wiggling...")
+WiggleOnKillersShoulders() {
+	global ttip
+	ttip.add("wiggle", "Wiggling...")
 	tildeKey := GetKeyName("SC029")
 
 	while GetKeyState(tildeKey, "P") {
@@ -164,84 +163,175 @@ SC029::
 		Send {d up}
 		Sleep, 50
 	}
-	ClearTooltip("wiggle")
-	return
-
-
-
-
-; =============================================================================
-; Flashlight spam
-; ---------------
-; Trigger: Hold down mouse wheel.
-; =============================================================================
-; The default is 10 (ms) but for flashlight spamming we want clicks to be faster.
-SetMouseDelay, 0
-*MButton::
-	while GetKeyState("MButton", "P")
-	{
-		MouseClick, Right
-	}
-	return
-
-
+	ttip.remove("wiggle")
+}
 
 
 ; =============================================================================
 ; Cancel toggleable action
 ; ------------------------
-; Trigger: <Esc>
-;
 ; Description: Cancels any action that is currently running depending on the
 ; 'toggle' variable.
 ; =============================================================================
-$Escape::
-	global toggle
+CancelToggleableAction() {
+	global toggle, ttip
 
 	if (toggle) {
 		toggle := False
-		ClearToolTips()
+		ttip.remove("gen-tap")
+		ttip.remove("chat-flood")
 	}
 	else {
 		Send, {esc}
-	}
-	return
-
-
-ShowTooltip(key, message) {
-	global tooltipMessages
-	tooltipMessages[key] := message
-	DisplayAllTooltips()
+	}	
 }
 
 
-ClearTooltips() {
-	global tooltipMessages
-	tooltipMessages := {}
-	ToolTip
-}
 
-ClearTooltip(key) {
-	global tooltipMessages
-	tooltipMessages.Delete(key)
-	DisplayAllTooltips()
-}
+#IfWinActive
 
-DisplayAllTooltips() {
-	global tooltipMessages
-	tooltip := ""
 
-	for key, msg in tooltipMessages {
-		tooltip := tooltip msg "`n"
+class MouseButtonLockManager {
+	_ttip :=
+	_m1_locked := False
+	_m2_locked := False
+
+
+	__New(multi_tooltip) {
+		this._ttip := multi_tooltip
 	}
 
-	coords := GetScreenCoords(0.45, 0.01)
-	Tooltip, %tooltip%, coords[1], coords[2]
+
+	toggleLock() {
+		if (this._m1_locked or this._m2_locked) {
+			this._unlock()
+			return False
+		}
+
+		lButtonDown := GetKeyState("LButton", "P")
+		rButtonDown := GetkeyState("RButton", "P")
+
+		if (lButtonDown) {
+			this._lockM1()
+		}
+		else if (rButtonDown) {
+			this._lockM2()
+		}
+
+		return lButtonDown or rButtonDown
+	}
+
+	_lockM1() {
+		this._ttip.add("lock-m1", "Holding M1...")
+		this._m1_locked := True
+	}
+
+	_lockM2() {
+		this._ttip.add("lock-m2", "Holding M2...")
+		this._m2_locked := True
+	}
+
+	_unlock() {
+		this._unlockM1()
+		this._unlockM2()
+	}
+
+	_unlockM1() {
+		if (this._m1_locked) {
+			this._m1_locked := False
+			this._ttip.remove("lock-m1")
+		}		
+
+		if (this._m2_locked) {
+			Click,, Right,, Up
+			this._m2_locked := False
+			this._ttip.remove("lock-m2")			
+		}
+	}
+
+	_unlockM2() {
+		if (this._m1_locked) {
+			Click,, Left,, Up
+			this._m1_locked := False
+			this._ttip.remove("lock-m1")
+		}		
+
+		if (this._m2_locked) {
+			this._m2_locked := False
+			this._ttip.remove("lock-m2")			
+		}
+	}
+
+
+	notifyLeftButtonDown() {
+		this._unlockM1()
+		Click,, Left,, Down
+	}
+
+	notifyLeftButtonUp() {
+		if (this._m1_locked) {
+			return
+		}
+		Send, {LButton Up}
+	}
+
+	notifyRightButtonDown() {
+		this._unlockM2()
+		Click,, Right,, Down
+	}
+
+	notifyRightButtonUp() {
+		if (this._m2_locked) {
+			return
+		}
+		Send, {RButton Up}
+	}
+
 }
 
+
+class MultiTooltip {
+
+	_messages := {}
+
+
+	add(key, message) {
+		this._messages[key] := message
+		this._displayAll()
+	}
+
+	removeAll() {
+		this._messages := {}
+		ToolTip
+	}
+
+	remove(key) {
+		this._messages.Delete(key)
+		this._displayAll()
+	}
+
+	_displayAll() {
+		tooltip := ""
+
+		for key, msg in this._messages {
+			tooltip := tooltip msg "`n"
+		}
+
+		coords := GetScreenCoords(0.45, 0.01)
+		Tooltip, %tooltip%, coords[1], coords[2]
+	}
+}
+
+
+
+
+; ------------------------------------------------------------------------------------
+; Utility functions
+; ------------------------------------------------------------------------------------
 GetScreenCoords(xPercent, yPercent) {
+	global GAME_WINDOW_TITLE
 	windowWidth := 0
 	windowHeight := 0
 	WinGetPos,,, windowWidth, windowHeight, % GAME_WINDOW_TITLE
-	return [windowWidth * xPercent, windowHeight * yPercent]
+	return [Round(windowWidth * xPercent), Round(windowHeight * yPercent)]
 }
