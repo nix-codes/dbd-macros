@@ -4,7 +4,7 @@
 ; Author     : Nicky Ramone
 ; Created    : Jan, 2019
 ; Last update: Mar, 2021
-; Revision   : 2
+; Version    : 1.1.0
 ; =============================================================================
 
 ; --------------------------------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 ; Action                        | Hotkey for enabling               | Hotkey for disabling
 ; ------------------------------+-----------------------------------+-------------------------------
 ; Hold M1                       | Hold <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
-; Hold M2                       | Hola <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
+; Hold M2                       | Hold <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
 ; Wiggle on killer's shoulders  | Hold <~>                          |
 ; Struggle on hook              | <Tab>                             | <Tab>
 ; Flashlight spam               | Hold <Middle Mouse Button>        |
@@ -36,6 +36,9 @@ toggle := False
 struggling := False
 ttip := new MultiTooltip()
 mouse_button_lock_manager := new MouseButtonLockManager(ttip)
+
+MonitorGameWindowFocus()
+
 return
 
 
@@ -44,10 +47,7 @@ return
 ; Macros
 ; ------------------------------------------------------------------------------------
 
-
 #If WinActive(GAME_WINDOW_TITLE)
-
-
 
 SC029::
 	WiggleOnKillersShoulders()
@@ -87,6 +87,32 @@ RButton Up::
 $Escape::
 	CancelToggleableAction()
 	return
+
+#IfWinActive
+
+
+; ------------------------------------------------------------------------------------
+; Main functions
+; ------------------------------------------------------------------------------------
+
+MonitorGameWindowFocus() {
+	global ttip, GAME_WINDOW_TITLE
+	tooltip_visible := False
+
+	Loop {
+		WinWaitActive, %GAME_WINDOW_TITLE%
+		if (tooltip_visible) {
+			ttip.show()
+		}
+
+		WinWaitNotActive, %GAME_WINDOW_TITLE%
+		tooltip_visible := ttip.isVisible()
+
+		if (tooltip_visible) {
+			Tooltip
+		}
+	}	
+}
 
 
 ; =============================================================================
@@ -188,8 +214,10 @@ CancelToggleableAction() {
 
 
 
-#IfWinActive
 
+; ------------------------------------------------------------------------------------
+; Classes
+; ------------------------------------------------------------------------------------
 
 class MouseButtonLockManager {
 	_ttip :=
@@ -293,24 +321,26 @@ class MouseButtonLockManager {
 class MultiTooltip {
 
 	_messages := {}
+	_visible := False
 
 
 	add(key, message) {
 		this._messages[key] := message
-		this._displayAll()
+		this.show()
 	}
 
 	removeAll() {
 		this._messages := {}
 		ToolTip
+		this._visible := False
 	}
 
 	remove(key) {
 		this._messages.Delete(key)
-		this._displayAll()
+		this.show()
 	}
 
-	_displayAll() {
+	show() {
 		tooltip := ""
 
 		for key, msg in this._messages {
@@ -319,6 +349,12 @@ class MultiTooltip {
 
 		coords := GetScreenCoords(0.45, 0.01)
 		Tooltip, %tooltip%, coords[1], coords[2]
+		this._visible := True
+	}
+
+
+	isVisible() {
+		return this._visible
 	}
 }
 
