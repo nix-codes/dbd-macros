@@ -9,16 +9,16 @@
 
 ; --------------------------------------------------------------------------------------------------
 ; Macros summary
-; --------------------------------------------------------------------------------------------------
-; Action                        | Hotkey for enabling               | Hotkey for disabling
-; ------------------------------+-----------------------------------+-------------------------------
-; Hold M1                       | Hold <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
-; Hold M2                       | Hold <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
-; Wiggle on killer's shoulders  | Hold <~>                          |
-; Struggle on hook              | <Tab>                             | <Tab>
-; Flashlight spam               | Hold <Middle Mouse Button>        |
-; --------------------------------------------------------------------------------------------------
-
+; ------------------------------------------------------------------------------------------------------
+; Action                            | Hotkey for enabling               | Hotkey for disabling
+; ----------------------------------+-----------------------------------+-------------------------------
+; Hold M1                           | Hold <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
+; Hold M2                           | Hold <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
+; Wiggle on killer's shoulders      | Hold <~>                          |
+; Struggle on hook                  | <Tab>                             | <Tab>
+; Activate ability                  | <Mouse wheel down>                |
+; Flashlight spam                   | Hold <Middle Mouse Button>        |
+; ------------------------------------------------------------------------------------------------------
 
 
 
@@ -55,6 +55,10 @@ SC029::
 
 *MButton::
 	SpamFlashlight()
+	return
+
+~LShift & WheelDown::
+	DoDeadHard()
 	return
 
 Tab::
@@ -114,6 +118,22 @@ MonitorGameWindowFocus() {
 	}	
 }
 
+
+; =============================================================================
+; Dead-hard with mouse wheel
+; --------------------------
+; Description: Useful for dead-hard'ing with mouse wheel. Replaces having to
+; press 'e'.
+; The advantage of using this macro over the keyboard setting inside DBD is that
+; if you bind the action key to the mouse wheel in DBD, the perk "repressed 
+; alliance" will not work. With this macro, you can use mouse wheel for DH and leave
+; the actual action key ('E' by default) to other stuff.
+; =============================================================================
+DoDeadHard() {
+	if (GetKeyState("w", "P") or GetKeyState("s", "P")) {
+		Send, e
+	}
+}
 
 ; =============================================================================
 ; Flashlight spam
