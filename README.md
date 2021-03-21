@@ -11,7 +11,6 @@ _Wiggle on killer's shoulders_               | Hold \<~\>                       
 _Struggle on hook_                           | \<Tab\>                             | \<Tab\>
 _Activate ability_                           | \<Mouse wheel down\>                |
 _Flashlight spam_                            | Hold \<Middle Mouse Button\>        |
-----------------------------------------------------------------------------------------------------------------
 
 ## Note:
 The above actions depend on DBD config to be using the default keys for those actions.
@@ -22,7 +21,7 @@ The above actions depend on DBD config to be using the default keys for those ac
 * _Hold M2_          &#8594; will keep the right mouse button down
 
 
-
+----------------------------------------------------------------------------------------------------------------
 
 # Is this bannable?
 No. This macro provides no competitive advantage for playing the game. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
