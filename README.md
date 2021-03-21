@@ -3,7 +3,6 @@ This project consists of a series of very simple macros for "Dead By Daylight" g
 
 
 # What can it do?
-----------------------------------------------------------------------------------------------------------------
 Action                                     | Hotkey for enabling               | Hotkey for disabling
 -------------------------------------------|:----------------------------------|:-------------------------------
 _Hold M1_ (repairing gens; healing; etc.)    | Hold \<Left Mouse Button\> + \<Tab\>  | \<Left/Right Mouse Click\>
@@ -16,11 +15,11 @@ _Flashlight spam_                            | Hold \<Middle Mouse Button\>     
 
 ## Note:
 The above actions depend on DBD config to be using the default keys for those actions.
-_Struggle on hook_ &#8594; will press "space" key repeatedly
-_Activate ability_ &#8594; will press "E" key when the mouse wheel scrolls down
-_Flashlight spam_  &#8594; will press the right mouse button repeatedly
-_Hold M1_          &#8594; will keep the left mouse button down
-_Hold M2_          &#8594; will keep the right mouse button down
+* _Struggle on hook_ &#8594; will press "space" key repeatedly
+* _Activate ability_ &#8594; will press "E" key when the mouse wheel scrolls down
+* _Flashlight spam_  &#8594; will press the right mouse button repeatedly
+* _Hold M1_          &#8594; will keep the left mouse button down
+* _Hold M2_          &#8594; will keep the right mouse button down
 
 
 
