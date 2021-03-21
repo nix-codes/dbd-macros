@@ -3,25 +3,26 @@ This project consists of a series of very simple macros for "Dead By Daylight" g
 
 
 # What can it do?
-Action                                     | Hotkey for enabling               | Hotkey for disabling
--------------------------------------------|:----------------------------------|:-------------------------------
-*Hold M1* (repairing gens; healing; etc.)    | _Hold \<Left Mouse Button\> + \<Tab\>_  | \<Left/Right Mouse Click\>
-_Hold M2_ (healing; using toolbox; etc.)     | Hold \<Right Mouse Button\> + <Tab\> | \<Right/Right Mouse Click\>
-_Wiggle on killer's shoulders_               | Hold \<~\>                          |
-_Struggle on hook_                           | \<Tab\>                             | \<Tab\>
-_Activate ability_                           | \<Mouse wheel down\>                |
-_Flashlight spam_                            | Hold \<Middle Mouse Button\>        |
+Action                                       | Hotkey for enabling                     | Hotkey for disabling
+---------------------------------------------|:----------------------------------------|:-------------------------------
+**Hold M1** (repairing gens; healing; etc.)  | _Hold \<Left Mouse Button\> + \<Tab\>_  | _\<Left/Right Mouse Click\>_
+**Hold M2** (healing; using toolbox; etc.)   | _Hold \<Right Mouse Button\> + <Tab\>_  | _\<Right/Right Mouse Click\>_
+**Wiggle on killer's shoulders**             | _Hold \<~\>_                            |
+**Struggle on hook**                         | _\<Tab\>_                               | _\<Tab\>_
+**Activate ability**                         | _\<Mouse wheel down\>_                  |
+**Flashlight spam**                          | _Hold \<Middle Mouse Button\>_          |
 
 ## Note:
 The above actions depend on DBD config to be using the default keys for those actions.
-* _Struggle on hook_ &#8594; will press "space" key repeatedly
-* _Activate ability_ &#8594; will press "E" key when the mouse wheel scrolls down
-* _Flashlight spam_  &#8594; will press the right mouse button repeatedly
-* _Hold M1_          &#8594; will keep the left mouse button down
-* _Hold M2_          &#8594; will keep the right mouse button down
+* **Struggle on hook** &#8594; will press "space" key repeatedly
+* **Activate ability** &#8594; will press "E" key when the mouse wheel scrolls down
+* **Flashlight spam**  &#8594; will press the right mouse button repeatedly
+* **Hold M1**          &#8594; will keep the left mouse button down
+* **Hold M2**          &#8594; will keep the right mouse button down
 
 
 ----------------------------------------------------------------------------------------------------------------
+
 
 # Is this bannable?
 No. This macro provides no competitive advantage for playing the game. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
