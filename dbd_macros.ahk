@@ -4,7 +4,7 @@
 ; Author     : Nicky Ramone
 ; Created    : Jan, 2019
 ; Last update: Mar, 2021
-; Version    : 1.1.0
+; Version    : 1.1.1
 ; =============================================================================
 
 ; --------------------------------------------------------------------------------------------------
@@ -49,7 +49,9 @@ return
 
 #If WinActive(GAME_WINDOW_TITLE)
 
+; tilde (~) key
 SC029::
+	mouse_button_lock_manager.unlock()
 	WiggleOnKillersShoulders()
 	return
 
@@ -252,7 +254,7 @@ class MouseButtonLockManager {
 
 	toggleLock() {
 		if (this._m1_locked or this._m2_locked) {
-			this._unlock()
+			this.unlock()
 			return False
 		}
 
@@ -279,40 +281,39 @@ class MouseButtonLockManager {
 		this._m2_locked := True
 	}
 
-	_unlock() {
+	unlock() {
 		this._unlockM1()
 		this._unlockM2()
 	}
 
 	_unlockM1() {
 		if (this._m1_locked) {
+			if (GetKeyState("LButton")) {
+				Click,, Left,, Up
+			}
 			this._m1_locked := False
 			this._ttip.remove("lock-m1")
-		}		
-
-		if (this._m2_locked) {
-			Click,, Right,, Up
-			this._m2_locked := False
-			this._ttip.remove("lock-m2")			
 		}
 	}
 
 	_unlockM2() {
+		if (this._m2_locked) {
+			if (GetkeyState("RButton")) {
+				Click,, Right, Up
+			}
+			this._m2_locked := False
+			this._ttip.remove("lock-m2")
+		}
+	}
+
+	notifyLeftButtonDown() {
+		this._unlockM2()
+
 		if (this._m1_locked) {
-			Click,, Left,, Up
 			this._m1_locked := False
 			this._ttip.remove("lock-m1")
 		}		
 
-		if (this._m2_locked) {
-			this._m2_locked := False
-			this._ttip.remove("lock-m2")			
-		}
-	}
-
-
-	notifyLeftButtonDown() {
-		this._unlockM1()
 		Click,, Left,, Down
 	}
 
@@ -324,7 +325,12 @@ class MouseButtonLockManager {
 	}
 
 	notifyRightButtonDown() {
-		this._unlockM2()
+		this._unlockM1()
+
+		if (this._m2_locked) {
+			this._m2_locked := False
+			this._ttip.remove("lock-m2")			
+		}
 		Click,, Right,, Down
 	}
 
