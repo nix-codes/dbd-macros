@@ -26,10 +26,6 @@ Action                                       | Hotkey for enabling              
 **Flashlight spam**                          | _Hold \<Middle Mouse Button\>_     |
 
 
-&NewLine;
-----------------------------------------------------------------------------------------------------------------
-
-
 # Is this bannable?
 No. This macro provides no competitive advantage for playing the game. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
 
