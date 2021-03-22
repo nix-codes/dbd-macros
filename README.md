@@ -29,7 +29,7 @@ Action                                       | Hotkey for enabling              
 
   
 # Is this bannable?
-No. This macro provides no competitive advantage for playing the game. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
+No. This macro provides no competitive advantage for playing the game, nor does it intrude or hook into the game's process code or memory. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
 
 
   
