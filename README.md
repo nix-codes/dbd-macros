@@ -17,17 +17,17 @@ This project consists of a series of very simple macros for "Dead By Daylight" g
 
 
 ## Summary of hotkeys:
-Action                                       | Hotkey for enabling                | Hotkey for disabling
----------------------------------------------|:-----------------------------------|:-------------------------------
-**Hold M1** (repairing gens; healing; etc.)  | _\<Left Mouse Button\> + \<Tab\>_  | _\<Left/Right Mouse Click\>_
-**Hold M2** (healing; using toolbox; etc.)   | _\<Right Mouse Button\> + <Tab\>_  | _\<Right/Right Mouse Click\>_
-**Wiggle on killer's shoulders**             | _Hold \<~\>_                       |
-**Struggle on hook**                         | _\<Tab\>_                          | _\<Tab\>_
-**Activate ability**                         | _\<Mouse wheel down\>_             |
-**Flashlight spam**                          | _Hold \<Middle Mouse Button\>_     |
-
-
+Action                            | Hotkey for enabling                | Hotkey for disabling
+----------------------------------|:-----------------------------------|:-------------------------------
+**Hold M1**                       | _\<Left Mouse Button\> + \<Tab\>_  | _\<Left/Right Mouse Click\>_
+**Hold M2**                       | _\<Right Mouse Button\> + <Tab\>_  | _\<Right/Right Mouse Click\>_
+**Wiggle on killer's shoulders**  | _Hold \<~\>_                       |
+**Struggle on hook**              | _\<Tab\>_                          | _\<Tab\>_
+**Activate ability**              | _\<Mouse wheel down\>_             |
+**Flashlight spam**               | _Hold \<Middle Mouse Button\>_     |
   
+  
+    
 # Is this bannable?
 No. This macro provides no competitive advantage for playing the game, nor does it intrude or hook into the game's process code or memory. It just offers alternative key bindings and/or automates minor actions that can be performed manually without skill requirement.
 
