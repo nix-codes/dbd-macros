@@ -11,9 +11,9 @@ This project consists of a series of very simple macros for "Dead By Daylight" g
 * **Wiggle on killer's shoulders** &#8594; will press "A" and "D" keys alternatively and repeatedly
 * **Struggle on hook**             &#8594; will press "space" key repeatedly
 * **Activate ability**             &#8594; will press "E" key
-  * Useful for dead-harding with the mouse wheel (which naturally more comfortable than the "E" key). You could also bind the ability to the mouse wheel in game settings. The problem is that it doesn't work well with other perks, like "Repressed Alliance".
+  * Useful for dead-hard'ing with the mouse wheel (which is naturally more comfortable and efficient than the "E" key). Of course, you could also bind the ability to the mouse wheel in game settings but the problem with that approach is that it doesn't work well with other perks like "Repressed Alliance". Hence, this macro comes in handy.
 * **Flashlight spam**              &#8594; will press the right mouse button repeatedly
-  * Just for fun and for catching survivors or killer's attention. It is for the sake of completeness that I included this here but a mouse software macro will be better than this one.
+  * Just for fun and for catching survivor's or killer's attention. It is for the sake of completeness that I included this here but a mouse software macro will be better than this one.
 
 
 ## Summary of hotkeys:
