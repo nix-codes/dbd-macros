@@ -7,18 +7,18 @@
 ; Version    : 1.1.1
 ; =============================================================================
 
-; --------------------------------------------------------------------------------------------------
+; -------------------------------------------------------------------------------------------------
 ; Macros summary
-; ------------------------------------------------------------------------------------------------------
-; Action                            | Hotkey for enabling               | Hotkey for disabling
-; ----------------------------------+-----------------------------------+-------------------------------
-; Hold M1                           | Hold <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
-; Hold M2                           | Hold <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
-; Wiggle on killer's shoulders      | Hold <~>                          |
-; Struggle on hook                  | <Tab>                             | <Tab>
-; Activate ability                  | <Mouse wheel down>                |
-; Flashlight spam                   | Hold <Middle Mouse Button>        |
-; ------------------------------------------------------------------------------------------------------
+; -------------------------------------------------------------------------------------------------
+; Action                            | Hotkey for enabling          | Hotkey for disabling
+; ----------------------------------+------------------------------+-------------------------------
+; Hold M1                           | <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
+; Hold M2                           | <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
+; Wiggle on killer's shoulders      | Hold <~>                     |
+; Struggle on hook                  | <Tab>                        | <Tab>
+; Activate ability                  | <Mouse wheel down>           |
+; Flashlight spam                   | Hold <Middle Mouse Button>   |
+; -------------------------------------------------------------------------------------------------
 
 
 
