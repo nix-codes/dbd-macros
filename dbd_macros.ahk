@@ -3,22 +3,22 @@
 ;
 ; Author     : Nicky Ramone
 ; Created    : Jan, 2019
-; Last update: Mar, 2021
-; Version    : 1.1.1
+; Last update: Apr, 2021
+; Version    : 1.1.2
 ; =============================================================================
 
-; -------------------------------------------------------------------------------------------------
+; ---------------------------------------------------------------------------------------------------------
 ; Macros summary
-; -------------------------------------------------------------------------------------------------
-; Action                            | Hotkey for enabling          | Hotkey for disabling
-; ----------------------------------+------------------------------+-------------------------------
-; Hold M1                           | <Left Mouse Button> + <Tab>  | <Left/Right Mouse Click>
-; Hold M2                           | <Right Mouse Button> + <Tab> | <Right/Right Mouse Click>
-; Wiggle on killer's shoulders      | Hold <~>                     |
-; Struggle on hook                  | <Tab>                        | <Tab>
-; Activate ability                  | <Mouse wheel down>           |
-; Flashlight spam                   | Hold <Middle Mouse Button>   |
-; -------------------------------------------------------------------------------------------------
+; ---------------------------------------------------------------------------------------------------------
+; Action                        | Hotkey for enabling                      | Hotkey for disabling
+; ------------------------------+------------------------------------------+-------------------------------
+; Hold M1                       | <Left Mouse Button> + <Tab>              | <Left/Right Mouse Click>
+; Hold M2                       | <Right Mouse Button> + <Tab>             | <Right/Right Mouse Click>
+; Wiggle on killer's shoulders  | Hold <~>                                 |
+; Struggle on hook              | <Tab>                                    | <Tab>
+; Dead Hard                     | <Shift> + <A/D/W/S> + <Mouse wheel down> |
+; Flashlight spam               | Hold <Middle Mouse Button>               |
+; ---------------------------------------------------------------------------------------------------------
 
 
 
@@ -115,7 +115,7 @@ MonitorGameWindowFocus() {
 		tooltip_visible := ttip.isVisible()
 
 		if (tooltip_visible) {
-			Tooltip
+			ttip.hide()
 		}
 	}	
 }
@@ -132,10 +132,12 @@ MonitorGameWindowFocus() {
 ; the actual action key ('E' by default) to other stuff.
 ; =============================================================================
 DoDeadHard() {
-	if (GetKeyState("w", "P") or GetKeyState("s", "P")) {
+	if (GetKeyState("w", "P") or GetKeyState("s", "P") or GetKeyState("a", "P") or GetKeyState("d", "P")) {
 		Send, e
+		ttip.addWithTimeout("deadhard", "Dead hard !!!", 3000)
 	}
 }
+
 
 ; =============================================================================
 ; Flashlight spam
@@ -191,8 +193,6 @@ PressSpaceOnWindow() {
 }
 
 
-
-
 ; =============================================================================
 ; Wiggle on killer's shoulders
 ; =============================================================================
@@ -226,8 +226,6 @@ CancelToggleableAction() {
 
 	if (toggle) {
 		toggle := False
-		ttip.remove("gen-tap")
-		ttip.remove("chat-flood")
 	}
 	else {
 		Send, {esc}
@@ -355,6 +353,12 @@ class MultiTooltip {
 		this.show()
 	}
 
+	addWithTimeout(key, message, timeout_ms) {
+		this.add(key, message)
+		fn := this.remove.bind(this, key)
+		SetTimer, %fn%, % timeout_ms * -1
+	}
+
 	removeAll() {
 		this._messages := {}
 		ToolTip
@@ -378,6 +382,9 @@ class MultiTooltip {
 		this._visible := True
 	}
 
+	hide() {
+		Tooltip
+	}
 
 	isVisible() {
 		return this._visible
